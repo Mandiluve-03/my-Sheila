@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Proposal</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        color: white;
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-shadow: 0 0 10px rgba(255,255,255,0.6);
+    }
+
+    button {
+        padding: 15px 35px;
+        margin: 10px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    #yesBtn {
+        background: white;
+        color: #ff4b6e;
+        font-weight: bold;
+    }
+
+    #noBtn {
+        background: #ff4b6e;
+        color: white;
+    }
+
+    #message {
+        margin-top: 25px;
+        font-size: 1.3rem;
+        min-height: 60px;
+    }
+
+    /* Floating Hearts */
+    .heart {
+        position: absolute;
+        color: rgba(255,255,255,0.7);
+        animation: floatUp 6s linear infinite;
+        font-size: 20px;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(100vh) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-10vh) scale(1.5);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Reneilwe, will you be my Valentine? ❤️</h1>
+    <button id="yesBtn">YES ❤️</button>
+    <button id="noBtn">NO 💔</button>
+    <div id="message"></div>
+</div>
+
+<script>
+let noClicks = 0;
+let noBtn = document.getElementById("noBtn");
+let yesBtn = document.getElementById("yesBtn");
+let message = document.getElementById("message");
+
+const playfulMessages = [
+    "Are you sure? 🥺",
+    "Really really sure? 😭",
+    "What if I bring chocolate? 🍫",
+    "Think carefully… 😏",
+    "Last chance... are you sure? 💔"
+];
+
+yesBtn.addEventListener("click", () => {
+    message.innerHTML = `
+        💖 You have made me the happiest short person alive. <br><br>
+        Happy Valentine's Day my Sheila. <br>
+        I love you ❤️
+    `;
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    createHearts(40);
+});
+
+noBtn.addEventListener("click", () => {
+    noClicks++;
+
+    if (noClicks < playfulMessages.length) {
+        message.innerHTML = playfulMessages[noClicks - 1];
+        
+        // Move button randomly
+        noBtn.style.position = "absolute";
+        noBtn.style.top = Math.random() * 80 + "%";
+        noBtn.style.left = Math.random() * 80 + "%";
+
+        // Shrink NO
+        noBtn.style.transform = `scale(${1 - noClicks * 0.15})`;
+
+        // Grow YES
+        yesBtn.style.transform = `scale(${1 + noClicks * 0.15})`;
+
+    } else {
+        message.innerHTML = "Well… I do not take NO for an answer!! 😌";
+        noBtn.style.display = "none";
+        yesBtn.style.transform = "scale(1.5)";
+    }
+});
+
+function createHearts(amount) {
+    for (let i = 0; i < amount; i++) {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+        document.body.appendChild(heart);
+    }
+}
+</script>
+
+</body>
+</html>
